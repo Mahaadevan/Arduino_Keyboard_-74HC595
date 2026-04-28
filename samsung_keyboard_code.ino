@@ -71,6 +71,7 @@
   {3,11, KEY_PAGE_DOWN},
   {7,16, KEY_UP_ARROW},
   {0,12, KEY_LEFT_ARROW},
+  {0,11, KEY_DOWN_ARROW},
   {6,12, KEY_RIGHT_ARROW},
 
   // Main keys
