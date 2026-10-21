@@ -3,7 +3,8 @@
 Replace the dead controller of a **Samsung SDM4500P** (P/N KB2M001SPAAD) multimedia keyboard with an **Arduino Pro Micro (ATmega32U4)** and **two 74HC595 shift registers**. The Pro Micro enumerates as a USB HID keyboard plus consumer-control (media) device.
 
 ![Schematic](docs/images/schematic.png)
-
+![Board](docs/photos/05-pro-micro-on-controller-board.png)
+![Schematic](docs/photos/06-74hc595-wiring-rear.png)
 ## Why shift registers?
 The membrane matrix is 8 rows × 18 columns = 26 lines, more than a Pro Micro can spare. Two 74HC595s drive **16 columns**, the Pro Micro drives **2 columns** directly and reads the **8 rows** directly.
 
