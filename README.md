@@ -37,8 +37,15 @@ Each column is pulled LOW in turn; a row reading LOW means key (row, col) is pre
 ## Build & flash
 1. Arduino IDE, board **Arduino Leonardo** (or SparkFun Pro Micro 5V/16MHz).
 2. Install the **HID-Project** library.
-3. Per the sketch header: rename `HID-Project/src/MultiReport/ImprovedKeyboard.cpp` to `ImprovedKeyboard.cpp.bak`.
+3. Apply the HID-Project workaround below (rename `ImprovedKeyboard.cpp`).
 4. Open `samsung_keyboard_code/samsung_keyboard_code.ino` and upload.
+
+## HID-Project workaround (important)
+Normal keys and the media/consumer keys would not work together using HID-Project's own `Keyboard` class. As a workaround, `HID-Project/src/MultiReport/ImprovedKeyboard.cpp` is renamed to `ImprovedKeyboard.cpp.bak`. That disables HID-Project's `Keyboard` implementation, so `Keyboard.press()/release()` resolve to the Arduino core's built-in `Keyboard.h`, while `Consumer` (media keys) and `BootKeyboard` (LED state) still come from HID-Project.
+
+- This edits a library install, so it is lost on library update/reinstall – redo the rename after updating.
+- Undo it by restoring the `.cpp` filename.
+- Possible cleaner fix: a forked HID-Project with that file removed, vendored into the repo.
 
 ## Verify / remap
 1. Flash `diagnostic_matrix`, open Serial Monitor at 115200.
@@ -47,7 +54,7 @@ Each column is pulled LOW in turn; a row reading LOW means key (row, col) is pre
 
 ## Known quirks / TODO
 - Pins 0/1 are columns, so hardware UART is unavailable (USB CDC unaffected).
-- LEDs are read via `BootKeyboard.getLeds()` while keys are sent via `Keyboard`; if LEDs don't follow lock state, add `BootKeyboard.begin()` in `setup()`.
+- LEDs are read via `BootKeyboard.getLeds()` while keys are sent via the core `Keyboard` (see workaround above); if LEDs don't follow lock state, add `BootKeyboard.begin()` in `setup()`.
 - `keyMappings` is searched linearly per matrix cell each scan; fine at this size.
 - In the spreadsheet, `5,1` is listed for both `1` and `2`; firmware correctly uses `5,2` for `2`. Second-function numpad entries are the NumLock-off layer, handled by the host OS.
 - Some media keys (pg1–pg5, "i", help …) are mapped to brightness/zoom/logoff etc.; change to taste.
