@@ -41,7 +41,7 @@ Each column is pulled LOW in turn; a row reading LOW means key (row, col) is pre
 4. Open `samsung_keyboard_code/samsung_keyboard_code.ino` and upload.
 
 ## HID-Project workaround (important)
-Normal keys and the media/consumer keys would not work together using HID-Project's own `Keyboard` class. As a workaround, `HID-Project/src/MultiReport/ImprovedKeyboard.cpp` is renamed to `ImprovedKeyboard.cpp.bak`. That disables HID-Project's `Keyboard` implementation, so `Keyboard.press()/release()` resolve to the Arduino core's built-in `Keyboard.h`, while `Consumer` (media keys) and `BootKeyboard` (LED state) still come from HID-Project.
+Normal keys and the media/consumer keys would not work together for me using HID-Project's own `Keyboard` class. As a workaround, `HID-Project/src/MultiReport/ImprovedKeyboard.cpp` is renamed to `ImprovedKeyboard.cpp.bak`. That disables HID-Project's `Keyboard` implementation, so `Keyboard.press()/release()` resolve to the Arduino core's built-in `Keyboard.h`, while `Consumer` (media keys) and `BootKeyboard` (LED state) still come from HID-Project.
 
 - This edits a library install, so it is lost on library update/reinstall – redo the rename after updating.
 - Undo it by restoring the `.cpp` filename.
