@@ -53,6 +53,7 @@ Normal keys and the media/consumer keys would not work together using HID-Projec
 3. Edit `keyMappings[]` and the CSV/XLSX.
 
 ## Known quirks / TODO
+- **Left Shift (row 6, col 7) misbehaves during multi-key presses** – combos with it can drop or miss keys. Not yet fixed. Likely cause (unconfirmed): membrane matrix ghosting/blocking, since there are no per-key diodes. Things to try: check with `diagnostic_matrix` which combos fail, remap Left Shift to a different matrix position if possible, or compare against Right Shift (2,7), which is on a different row.
 - Pins 0/1 are columns, so hardware UART is unavailable (USB CDC unaffected).
 - LEDs are read via `BootKeyboard.getLeds()` while keys are sent via the core `Keyboard` (see workaround above); if LEDs don't follow lock state, add `BootKeyboard.begin()` in `setup()`.
 - `keyMappings` is searched linearly per matrix cell each scan; fine at this size.
